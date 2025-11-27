@@ -1,0 +1,45 @@
+#  ReplicaSet: equality based selector
+ 
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app-rs
+  template:
+    metadata:
+      labels:
+        app: my-app-rs
+    spec:
+      containers:
+        - name: my-container
+          image: nginx:latest
+ ...
+
+
+  # repicaset: with set-based selector
+  
+       
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-rs
+spec:
+  replicas: 3
+  selector:
+     matchExpressions:
+       - key: app
+         operator: In
+         values:
+          -  my-app-rs
+  template:
+    metadata:
+      labels:
+        app: my-app-rs
+    spec:
+      containers:
+        - name: my-container
+          image: nginx:latest
