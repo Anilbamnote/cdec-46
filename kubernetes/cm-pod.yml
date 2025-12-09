@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: mysql-app
+  name: mysql-app
+spec:
+  containers:
+    - name: mysql-app
+      image: mysql
+      ports:
+        - name: mysql
+          containerPort: 3306
+
+      env:
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: my-vars
+              key: database_name
+
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:  
+              name: my-secret
+              key: database_pass
+
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:  
+              name: my-secret
+              key: database_user
+
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: mysql-app
+  name: mysql-app
+spec:
+  containers:
+    - name: mysql-app
+      image: mysql
+      ports:
+      - name: mysql
+        containerPort: 3306
+      env:
+      #   - name: MYSQL_ROOT_PASSWORD
+      #     value: redhat
+      #   - name: MYSQL_USER_NAME
+      #     value: shubham
+      #   - name: DB_NAME
+      #     value: studentapp
+
+      - name: DB_NAME
+        valueFrom:
+          configMapKeyRef:
+            name: my-vars
+            key: database_name
+
+      # - name: MYSQL_ROOT_PASSWORD
+      #   valueFrom:
+      #      configMapKeyRef:
+      #       name: my-cred
+      #       key: database_pass
+
+      - name: MYSQL_USER_NAME
+        valueFrom:
+           configMapKeyRef:
+            name: my-cred
+            key: database_user

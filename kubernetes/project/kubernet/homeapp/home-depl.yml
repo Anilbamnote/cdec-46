@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homeapp
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: homeapp
+    spec:
+      containers:
+      - name: homeapp
+        image: rajatpzade/myhome:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - name: http
+          protocol: TCP
+          containerPort: 80

@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+  namespace: dev
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+
+
+apiVersion: v1
+kind: Pod 
+metadata: 
+  name: my-poda 
+  labels:
+    app: my-apps 
+  namespace: space-x  
+spec:
+  containers: 
+    - name: my-con 
+      image: nginx 
+      ports: 
+        - containerPort: 80    
+
+       
+---
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: my-svc 
+spec:
+  selector:
+    app: my-apps
+  ports:
+    - protocol: TCP
+      port: 80    
+      targetPort: 80
+  type: NodePort    
+
+
+---
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  selector:
+    app: my-apps
+  namespace: dev  
+spec:
+  containers:
+  - name: my-container
+    image: httpd 
+    ports:
+    - containerPort: 80
+
+  - name: my-container
+    image: tomcat
+    ports:
+    - containerPort: 8080
+  
+
+        

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-cred
+data:
+  database_user: shubham
+  database_pass: redhat  # ⚠️ Store passwords in Secrets, not ConfigMaps!

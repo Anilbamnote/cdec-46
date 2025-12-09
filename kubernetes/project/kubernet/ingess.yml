@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: demo.com
+    http:
+      paths:
+      - path: /home
+        pathType: Prefix
+        backend:
+          service:
+            name: homeapp-service
+            port:
+              number: 80
+      - path: /mobile
+        pathType: Prefix
+        backend:
+          service:
+            name: mobileapp-service
+            port:
+              number: 80

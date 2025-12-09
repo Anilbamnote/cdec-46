@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: StatefullSet
+metadata:
+  name: my-ss
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ss-app
+
+  template:
+    metadata:
+      labels:
+        app: ss-app
+    spec:
+      containers:
+        - name: ss-container
+          image: httpd:latest
+          ports:
+            - containerPort: 80

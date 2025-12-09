@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloth-app
+  labels:
+    app: cloth-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: cloth-app
+    spec:
+      containers:
+        - name: cloth-app
+          image: httpd
+          ports:
+            - containerPort: 80
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloth-app
+  strategy:
+    type: RollingUpdate
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-app
+  labels:
+    app: auth-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: auth-app
+    spec:
+      containers:
+        - name: auth-app
+          image: nginx
+          ports:
+            - containerPort: 80
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-app
+  strategy:
+    type: RollingUpdate
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-app
+  labels:
+    app: payment-app
+spec:
+  template:
+    metadata:
+      labels:
+        app: payment-app
+    spec:
+      containers:
+        - name: payment-app
+          image: tomcat
+          ports:
+            - containerPort: 8080
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-app
+  strategy:
+    type: RollingUpdate

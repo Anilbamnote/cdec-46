@@ -1,0 +1,44 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cbz-ingress
+  labels:
+    app: cbz-ingress
+spec: 
+  ingressClassName: nginx
+  # defaultBackend:
+  #   service:
+  #     name: auth-app-service
+  #     port:
+  #       number: 80
+  rules:
+    - host: "cbz.com"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: auth-app-service
+                port:
+                  number: 80
+    - host: "cloth.cbz.com"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: cloth-app-service
+                port:
+                  number: 80
+    - host: "payment.cbz.com"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: payment-app-service
+                port:
+                  number: 8080

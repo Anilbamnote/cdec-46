@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloth-app-service
+spec:
+  ports:
+  - targetPort: 80
+    port: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: cloth-app
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-app-service
+spec:
+  ports:
+  - targetPort: 80
+    port: 80
+    protocol: TCP
+    name: nginx
+  selector:
+    app: auth-app
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-app-service
+spec:
+  ports:
+  - targetPort: 8080
+    port: 8080
+    protocol: TCP
+    name: java
+  selector:
+    app: payment-app

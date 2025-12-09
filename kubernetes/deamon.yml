@@ -1,0 +1,41 @@
+kind: DaemonSet
+metadata:
+  name: my-de
+spec:
+  selector:
+    matchLabels:
+      app: my-app-ds
+  template:
+    metadata:
+      labels:
+        app: my-app-ds
+    spec:
+      containers:
+        - name: my-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+   ## node selector in daemonset
+---
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-de
+spec:
+  selector:
+    matchLabels:
+      app: my-app-ds
+  template:
+    metadata:
+      labels:
+        app: my-app-ds
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: node01   #node-labels:<node name>
+      containers:
+        - name: my-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80

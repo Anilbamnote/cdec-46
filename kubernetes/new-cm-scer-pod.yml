@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: my-vars
+data:
+  DB_USER: "Admin"
+  DB_PASSWORD: "Redhat"
+
+
+```bash
+
+ kubectl apply -f configmap.yaml
+  kubectl get configmap my-vars -o yaml
+  kubectl describe cm my-vars
+```    
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-config-secret
+spec:
+  containers:
+  - name: test-container
+    image: nginx
+    env:
+    - name: DB_USER
+      valueFrom:
+        configMapKeyRef:
+          name: my-vars
+          key: DB_USER
+    - name: DB_PASSWORD
+      valueFrom:
+        configMapKeyRef:
+          name: my-vars
+          key: DB_PASSWORD  
+---
+
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: my-sec
+data:
+  DB_USER: "IEFkbWluCg=="       # Base64 encoded value of "Admin"
+  DB_PASSWORD: "IFJlZGhhdAo="   # Base64 encoded value of "Redhat"
+---
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-config-secret
+spec:
+  containers:
+  - name: test-container
+    image: nginx
+    env:
+    - name: DB_USER
+      valueFrom:
+        configMapKeyRef:
+          name: my-vars
+          key: DB_USER
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: my-sec
+          key: DB_PASSWORD
+
+- Note: The values will appear base64-encoded. To decode, use:
+
+```bash
+
+ echo "anil" | base64 --decode ----cmFqYXQK
+
+ echo "cmFqYXQK" | base64 -d -----anil
+```
