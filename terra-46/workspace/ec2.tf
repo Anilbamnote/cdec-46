@@ -64,3 +64,26 @@ provider "aws"{
     instance_type = ""
 
  }
+
+
+
+ resource "aws_security_groups" "mysg"{
+    Name = my-security_groups
+    description = "allow all trafic"
+#vpc_security_group_ids = [aws_security_groups.mysg.id]
+    tags = {
+        default = "mysg"
+    }
+ }
+ ingress {
+    from_port = 80
+    to_port =80
+    protocol = TCP
+    cidr_block = ["0.0.0./0"]
+ }
+ egress {
+    to_port= 0
+    from_port = 0
+    protocol = "-1"
+    cidr_block = ["0.0.0.0/0"]
+ }

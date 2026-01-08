@@ -60,9 +60,15 @@ spec:
     env:
     - name: DB_USER
       valueFrom:
-        secretKeyRef:
-          name: my-secret-vars
+        configMapKeyRef:
+          name: my-vars
           key: DB_USER
+
+    # - name: DB_USER
+    #   valueFrom:
+    #     secretKeyRef:
+    #       name: my-secret-vars
+    #       key: DB_USER
     - name: DB_PASSWORD
       valueFrom:
         secretKeyRef:
