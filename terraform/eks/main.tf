@@ -5,7 +5,7 @@ region = "us-east-1"
 
 # Create an IAM Role for the EKS Cluster
 resource "aws_iam_role" "eks_cluster_role" {
-  name = "eks-cluster-role"
+  name = "eks-cluster-role1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -34,7 +34,7 @@ resource "aws_iam_role_policy_attachment" "eks_service_policy" {
 
 # Create an IAM Role for the Node Group
 resource "aws_iam_role" "eks_node_role" {
-  name = "eks-node-role"
+  name = "eks-node-role1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
